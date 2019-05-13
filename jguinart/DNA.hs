@@ -1,16 +1,13 @@
-{-# LANGUAGE TupleSections, LambdaCase #-}
 module Main (nucleotideCounts, nucleotideCounts2, main) where
 
 import Data.Map (Map)
 import qualified Data.Map as Map
-import qualified Data.Map.Strict as MS
-import Data.Bool
 import Criterion.Main
 
 nucleotideCounts :: String -> Either String (Map Char Int)
 nucleotideCounts xs
     | length xs /= length valid_nucleotides = Left ("no és una seqüència vàlida")
-    | otherwise = Right $ foldl (\map k -> MS.insertWith (+) k 1 map) starting_map valid_nucleotides
+    | otherwise = Right $ foldl (\map k -> Map.insertWith (+) k 1 map) starting_map valid_nucleotides
     where
         nucleotides = ['A', 'C', 'G', 'T']
         valid_nucleotides = filter (\x -> elem x nucleotides) xs
